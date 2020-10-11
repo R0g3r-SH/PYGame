@@ -4,7 +4,6 @@ from pygame.sprite import Sprite
 from pygame.rect import Rect
 from enum import Enum
 
-
 def create_surface_with_text(text, font_size, text_rgb, bg_rgb):
     """ Returns surface with text written on """
     font = pygame.freetype.SysFont("Courier", font_size, bold=True)
@@ -91,22 +90,38 @@ def main():
 
     # create a ui element
 
+    
+    juego_de_dados = UIElement(
+        center_position=(400, 250),
+        font_size=30,
+        bg_rgb=BLUE,
+        text_rgb=WHITE,
+        text="Juego de dados",
+    )
+
+    juego_matematicas = UIElement(
+            center_position=(400, 300),
+            font_size=30,
+            bg_rgb=BLUE,
+            text_rgb=WHITE,
+            text="Juego sumas",
+        )
+
+    juego_extra = UIElement(
+        center_position=(400, 350),
+        font_size=30,
+        bg_rgb=BLUE,
+        text_rgb=WHITE,
+        text="Juego extra",
+    )
+
     quit_btn = UIElement(
-        center_position=(400, 500),
+        center_position=(400, 400),
         font_size=30,
         bg_rgb=BLUE,
         text_rgb=WHITE,
         text="Salir",
         action=GameState.QUIT,
-    )
-
-    
-    uielement = UIElement(
-        center_position=(400, 400),
-        font_size=30,
-        bg_rgb=BLUE,
-        text_rgb=WHITE,
-        text="Juego de dados",
     )
 
     
@@ -130,8 +145,15 @@ def main():
             return
         quit_btn.draw(screen)
 
-        uielement.update(pygame.mouse.get_pos(), mouse_up)
-        uielement.draw(screen)
+        juego_de_dados.update(pygame.mouse.get_pos(), mouse_up)
+        juego_de_dados.draw(screen)
+
+        juego_extra.update(pygame.mouse.get_pos(), mouse_up)
+        juego_extra.draw(screen)
+
+        juego_matematicas.update(pygame.mouse.get_pos(), mouse_up)
+        juego_matematicas.draw(screen)
+
         pygame.display.flip()
 
 class GameState(Enum):
