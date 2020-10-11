@@ -5,4 +5,4 @@ from pygame.rect import Rect
 from enum import Enum
 
 def main():
-    
+    pass

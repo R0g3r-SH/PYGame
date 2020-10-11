@@ -3,6 +3,7 @@ import pygame.freetype
 from pygame.sprite import Sprite
 from pygame.rect import Rect
 from enum import Enum
+import os
 
 def create_surface_with_text(text, font_size, text_rgb, bg_rgb):
     """ Returns surface with text written on """
@@ -68,11 +69,14 @@ class UIElement(Sprite):
         """ Draws element onto a surface """
         surface.blit(self.image, self.rect)
 #Bucle principal del juego.
+
+
 def main():
+    path = os.path.abspath("..\Resources")
     pygame.init()
 
     #Lee el logo del tec, lo reescala y define su futura posición
-    logoDelTec = pygame.image.load("logotec2019.png")
+    logoDelTec = pygame.image.load(path + "\logotec2019.png")
     logoDelTec = pygame.transform.scale(logoDelTec, (250, 100))
     tecX = 0
     tecY = 0
@@ -82,7 +86,7 @@ def main():
 
     #Define el nombre de la ventana y el logo
     pygame.display.set_caption("Proyecto")
-    icon = pygame.image.load("matematicas.png")
+    icon = pygame.image.load(path + "\matematicas.png")
     pygame.display.set_icon(icon)
 
     BLUE = (41, 45, 111)
