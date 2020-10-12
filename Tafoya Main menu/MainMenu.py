@@ -5,7 +5,6 @@ from pygame.rect import Rect
 from enum import Enum
 import os
 
-
 def create_surface_with_text(text, font_size, text_rgb, bg_rgb):
     """ Returns surface with text written on """
     font = pygame.freetype.SysFont("Courier", font_size, bold=True)
@@ -14,17 +13,17 @@ def create_surface_with_text(text, font_size, text_rgb, bg_rgb):
 
 
 class UIElement(Sprite):
-    """ An user interface element that can be added to a surface """
+    """ Un elemento de interfaz grafica para añadir. """
 
     def __init__(self, center_position, text, font_size, bg_rgb, text_rgb, action=None):
         """
         Args:
             center_position - tuple (x, y)
-            text - string of text to write
+            text - string
             font_size - int
             bg_rgb (background colour) - tuple (r, g, b)
             text_rgb (text colour) - tuple (r, g, b)
-            action - the gamestate change associated with this button
+            action - el estado de cambio asociado a este boton
         """
         self.mouse_over = False
 
@@ -42,7 +41,7 @@ class UIElement(Sprite):
             highlighted_image.get_rect(center=center_position),
         ]
 
-        # assign button action
+        # Asignar una accion al boton
         self.action = action
 
         super().__init__()
@@ -69,6 +68,7 @@ class UIElement(Sprite):
     def draw(self, surface):
         """ Draws element onto a surface """
         surface.blit(self.image, self.rect)
+
 #Bucle principal del juego.
 def main():
     path = os.path.abspath("..\Resources")
