@@ -6,7 +6,7 @@ from enum import Enum
 import os
 
 def create_surface_with_text(text, font_size, text_rgb, bg_rgb):
-    """ Returns surface with text written on """
+    """ Retorna una superficie con texto escrito encima """
     font = pygame.freetype.SysFont("Courier", font_size, bold=True)
     surface, _ = font.render(text=text, fgcolor=text_rgb, bgcolor=bg_rgb)
     return surface.convert_alpha()
@@ -15,24 +15,25 @@ def create_surface_with_text(text, font_size, text_rgb, bg_rgb):
 class UIElement(Sprite):
     """ Un elemento de interfaz grafica para añadir. """
 
-    def __init__(self, center_position, text, font_size, bg_rgb, text_rgb, action=None):
+    def __init__(self, center_position, text, font_size, bg_rgb, inactive_rgb, active_rgb, action=None):
         """
         Args:
             center_position - tuple (x, y)
             text - string
             font_size - int
             bg_rgb (background colour) - tuple (r, g, b)
-            text_rgb (text colour) - tuple (r, g, b)
+            inactive_rgb (text colour) - tuple (r, g, b)
+            active_rgb (text colour) - tuple (r, g, b)
             action - el estado de cambio asociado a este boton
         """
         self.mouse_over = False
 
         default_image = create_surface_with_text(
-            text=text, font_size=font_size, text_rgb=text_rgb, bg_rgb=bg_rgb
+            text=text, font_size=font_size, text_rgb=inactive_rgb, bg_rgb=bg_rgb
         )
 
         highlighted_image = create_surface_with_text(
-            text=text, font_size=font_size * 1.2, text_rgb=text_rgb, bg_rgb=bg_rgb
+            text=text, font_size=font_size * 1.2, text_rgb=active_rgb, bg_rgb=bg_rgb
         )
 
         self.images = [default_image, highlighted_image]
@@ -55,8 +56,9 @@ class UIElement(Sprite):
         return self.rects[1] if self.mouse_over else self.rects[0]
 
     def update(self, mouse_pos, mouse_up):
-        """ Updates the mouse_over variable and returns the button's
-            action value when clicked.
+        """ 
+            Actualiza la variable mouse_over y retorna la accion del boton al
+            hacer click.
         """
         if self.rect.collidepoint(mouse_pos):
             self.mouse_over = True
@@ -66,7 +68,7 @@ class UIElement(Sprite):
             self.mouse_over = False
 
     def draw(self, surface):
-        """ Draws element onto a surface """
+        """ Dibuja un elemento sobre la superficie."""
         surface.blit(self.image, self.rect)
 
 #Bucle principal del juego.
@@ -88,41 +90,46 @@ def main():
     icon = pygame.image.load(path + "\matematicas.png")
     pygame.display.set_icon(icon)
 
-    BLUE = (41, 45, 111)
-    WHITE = (255, 255, 255)
-
+    BG = (30, 30, 30)
+    #WHITE = (255, 255, 255)
+    COLOR_INACTIVE = pygame.Color('lightskyblue3')
+    COLOR_ACTIVE = pygame.Color('dodgerblue2')
     # create a ui element
 
     
     juego_de_dados = UIElement(
         center_position=(400, 250),
         font_size=30,
-        bg_rgb=BLUE,
-        text_rgb=WHITE,
+        bg_rgb=BG,
+        inactive_rgb=COLOR_INACTIVE,
+        active_rgb=COLOR_ACTIVE,
         text="Juego de dados",
     )
 
     juego_matematicas = UIElement(
-            center_position=(400, 300),
-            font_size=30,
-            bg_rgb=BLUE,
-            text_rgb=WHITE,
-            text="Juego sumas",
+        center_position=(400, 300),
+        font_size = 30,
+        bg_rgb = BG,
+        inactive_rgb = COLOR_INACTIVE,
+        active_rgb = COLOR_ACTIVE,
+        text="Juego de sumas",
         )
 
     juego_extra = UIElement(
         center_position=(400, 350),
         font_size=30,
-        bg_rgb=BLUE,
-        text_rgb=WHITE,
+        bg_rgb=BG,
+        inactive_rgb=COLOR_INACTIVE,
+        active_rgb=COLOR_ACTIVE,
         text="Juego extra",
     )
 
     quit_btn = UIElement(
         center_position=(400, 400),
         font_size=30,
-        bg_rgb=BLUE,
-        text_rgb=WHITE,
+        bg_rgb=BG,
+        inactive_rgb=COLOR_INACTIVE,
+        active_rgb=COLOR_ACTIVE,
         text="Salir",
         action=GameState.QUIT,
     )
@@ -137,8 +144,7 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
-
-        screen.fill(BLUE)
+        screen.fill(BG)
 
         #Dibuja en pantalla el logo
         screen.blit(logoDelTec, (tecX, tecY))
