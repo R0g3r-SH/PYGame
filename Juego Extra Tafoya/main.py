@@ -8,7 +8,7 @@ import random
 
 num_to_guess = random.randint(1,25)
 intentos = 3
-
+state=''
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
 
@@ -124,16 +124,15 @@ class InputBox():
 def take_a_guess(guess):
     global num_to_guess
     global intentos
+    global state
     if guess == num_to_guess:
-        print("¡Lo adivinaste! ¡Guau!")
+        state = "      ¡Lo adivinaste! ¡Guau!"
     elif guess < num_to_guess:
-        print("Muy bajo. Vuelve a intentarlo.")
+        state = " Muy bajo. Vuelve a intentarlo."
         intentos -= 1
-        print("Intentos:", intentos)
     else:
-        print("Muy alto. Vuelve a intentarlo.")
+        state = "Muy alto. Vuelve a intentarlo."
         intentos -= 1
-        print("Intentos:", intentos)
 
 def main():
     global intentos
@@ -150,6 +149,11 @@ def main():
         txt= f'Tienes {intentos} intentos para adivinarlo.',
         location=(200, 200),
         size=(400, 30),
+    )
+    state3 = Label(
+        txt=state,
+        location=(-150, 400),
+        size=(800, 30),
     )
 
     while not done:
@@ -169,6 +173,10 @@ def main():
         state2.txt = f'Tienes {intentos} intentos para adivinarlo.'
         state2.update()
         state2.draw(screen)
+
+        state3.txt = state
+        state3.update()
+        state3.draw(screen)
 
         pygame.display.flip()
         clock.tick(30)
