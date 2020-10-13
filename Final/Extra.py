@@ -17,9 +17,18 @@ screen = pygame.display.set_mode((800, 600))
 
 FONT = pygame.font.Font(None, 32)
 path = os.path.abspath("..\Resources")
-pygame.init()
 
-screen = pygame.display.set_mode((800, 600))
+
+#Cierra el global
+class gameState():
+    def __init__(self):
+        self.running = True
+
+running = gameState()
+
+
+def end_main(running):
+    running.running = False
 
 #Define el nombre de la ventana y el logo
 pygame.display.set_caption("Juego Extra")
@@ -89,7 +98,12 @@ class UIElement(Sprite):
         if self.rect.collidepoint(mouse_pos):
             self.mouse_over = True
             if mouse_up:
-                eval(self.action)
+                
+                try:
+                    eval(self.action)
+                except:
+                    running = False
+                
         else:
             self.mouse_over = False
 
@@ -230,8 +244,11 @@ def end():
     global done
     done = True
 
-def main():
+def extra_main():
     global intentos
+    global done
+
+    done = False
     clock = pygame.time.Clock()
     input_box = InputBox(275, 300, 140, 32, "Ingresa tu intento aquí.")
     
@@ -259,7 +276,7 @@ def main():
     )
 
     retry = UIElement(
-        center_position=(225, 60),
+        center_position=(250, 60),
         font_size=20,
         bg_rgb=BG,
         inactive_rgb=COLOR_INACTIVE,
@@ -269,12 +286,12 @@ def main():
     )
 
     regresar_main_menu = UIElement(
-        center_position=(100, 60),
-        font_size=20,
+        center_position=(100, 62),
+        font_size=22,
         bg_rgb=BG,
         inactive_rgb=COLOR_INACTIVE,
         active_rgb=COLOR_ACTIVE,
-        text="Salir",
+        text="Regresar",
         action="end()",
     )
 
@@ -285,6 +302,7 @@ def main():
                 mouse_up = True
             if event.type == pygame.QUIT:
                 end()
+                end_main(running)
             input_box.handle_event(event)
 
         screen.fill((30, 30, 30))
@@ -317,6 +335,8 @@ def main():
         pygame.display.flip()
         clock.tick(30)
 
+"""
 if __name__ == '__main__':
-    main()
+    extra_main()
     pygame.quit()
+"""
