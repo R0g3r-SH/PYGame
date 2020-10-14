@@ -9,12 +9,19 @@ from enum import Enum
 import os
 """
 
+
 #Bucle principal del juego.
 def main():
     global running
     path = os.path.abspath("..\Resources")
     pygame.init()
+    pygame.mixer.init(frequency=44100)
 
+    #Lee el OST
+    pygame.mixer.music.load(path + "\OST.mp3")
+
+    #Comienza a reproducirlo
+    pygame.mixer.music.play(-1)
     #Lee el logo del tec, lo reescala y define su futura posición
     logoDelTec = pygame.image.load(path + "\logotec2019.png")
     logoDelTec = pygame.transform.scale(logoDelTec, (250, 100))
