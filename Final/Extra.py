@@ -16,8 +16,15 @@ pygame.init()
 screen = pygame.display.set_mode((800, 600))
 
 FONT = pygame.font.Font(None, 32)
+
 path = os.path.abspath("..\Resources")
 
+pygame.mixer.init()
+#Lee el OST
+pygame.mixer.music.load(path + "\OST.mp3")
+
+#Comienza a reproducirlo
+pygame.mixer.music.play(-1)
 
 #Cierra el global
 class gameState():
@@ -240,6 +247,7 @@ def reintentar():
     intentos = 3
     state=''
 
+#Termina la pantalla
 def end():
     global done
     done = True
