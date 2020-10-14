@@ -36,19 +36,25 @@ def main():
     icon = pygame.image.load(path + "\matematicas.png")
     pygame.display.set_icon(icon)
 
-    BG = (30, 30, 30)
+    #Define alguna constantes de colroes
+    BG = (0, 0, 0)
     #WHITE = (255, 255, 255)
-    COLOR_INACTIVE = pygame.Color('lightskyblue3')
-    COLOR_ACTIVE = pygame.Color('dodgerblue2')
-    # create a ui element
-
     
+    YELLOW_INACTIVE = (230, 234, 112)
+    YELLOW_ACTIVE = (243, 250, 3)
+    BLUE_INACTIVE = pygame.Color('lightskyblue3')
+    BLUE_ACTIVE = pygame.Color('dodgerblue2')
+    RED_INACTIVE = (246, 105, 105)
+    RED_ACTIVE = (255, 12, 12)
+    GREEN_INACTIVE = (123, 255, 91)
+    GREEN_ACTIVE = (38, 190, 1)
+
     juego_de_dados = UIElement(
         center_position=(400, 250),
         font_size=30,
         bg_rgb=BG,
-        inactive_rgb=COLOR_INACTIVE,
-        active_rgb=COLOR_ACTIVE,
+        inactive_rgb= BLUE_INACTIVE,
+        active_rgb= BLUE_ACTIVE,
         text="Juego de dados",
     )
 
@@ -56,8 +62,8 @@ def main():
         center_position=(400, 300),
         font_size = 30,
         bg_rgb = BG,
-        inactive_rgb = COLOR_INACTIVE,
-        active_rgb = COLOR_ACTIVE,
+        inactive_rgb=YELLOW_INACTIVE,
+        active_rgb = YELLOW_ACTIVE,
         text="Juego de sumas",
         )
 
@@ -65,8 +71,8 @@ def main():
         center_position=(400, 350),
         font_size=30,
         bg_rgb=BG,
-        inactive_rgb=COLOR_INACTIVE,
-        active_rgb=COLOR_ACTIVE,
+        inactive_rgb=GREEN_INACTIVE,
+        active_rgb=GREEN_ACTIVE,
         text="Juego extra",
         action = "extra_main()" 
     )
@@ -75,8 +81,8 @@ def main():
         center_position=(400, 400),
         font_size=30,
         bg_rgb=BG,
-        inactive_rgb=COLOR_INACTIVE,
-        active_rgb=COLOR_ACTIVE,
+        inactive_rgb=RED_INACTIVE,
+        active_rgb=RED_ACTIVE,
         text="Salir",
         action="end_main(running)"
     )

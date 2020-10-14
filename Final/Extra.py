@@ -42,9 +42,13 @@ pygame.display.set_caption("Juego Extra")
 icon = pygame.image.load(path + "\matematicas.png")
 pygame.display.set_icon(icon)
 
-COLOR_INACTIVE = pygame.Color('lightskyblue3')
-COLOR_ACTIVE = pygame.Color('dodgerblue2')
-BG = (30, 30, 30)
+#COLOR_INACTIVE = pygame.Color('lightskyblue3')
+#COLOR_ACTIVE = pygame.Color('dodgerblue2')
+COLOR_INACTIVE= (123, 255, 91)
+COLOR_ACTIVE = (38, 190, 1)
+READABLE_GREEN = (76, 251, 33)
+
+BG = (0, 0, 0)
 
 
 def create_surface_with_text(text, font_size, text_rgb, bg_rgb):
@@ -120,7 +124,7 @@ class UIElement(Sprite):
 
 class Label():
 
-    def __init__(self, txt, location, size=(160, 30), bg=BG, fg=COLOR_INACTIVE, font_name="Segoe Print", font_size=20):
+    def __init__(self, txt, location, size=(160, 30), bg=BG, fg=READABLE_GREEN, font_name="Segoe Print", font_size=20):
         """
             Args:
             txt = string 
@@ -250,6 +254,7 @@ def reintentar():
 #Termina la pantalla
 def end():
     global done
+    reintentar()
     done = True
 
 def extra_main():
@@ -313,7 +318,7 @@ def extra_main():
                 end_main(running)
             input_box.handle_event(event)
 
-        screen.fill((30, 30, 30))
+        screen.fill(BG)
         
         input_box.update()
         input_box.draw(screen)
