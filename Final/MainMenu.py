@@ -84,7 +84,8 @@ def main():
         inactive_rgb=RED_INACTIVE,
         active_rgb=RED_ACTIVE,
         text="Salir",
-        action="end_main(running)"
+        #action="exit_main()"
+        action="xd()"
     )
 
     while running.running:
@@ -100,9 +101,10 @@ def main():
         #Dibuja en pantalla el logo
         screen.blit(logoDelTec, (tecX, tecY))
 
-        ui_action = quit_btn.update(pygame.mouse.get_pos(), mouse_up)
-        if ui_action is not None:
-            return
+        quit_btn.update(pygame.mouse.get_pos(), mouse_up)
+        #ui_action = quit_btn.update(pygame.mouse.get_pos(), mouse_up)
+        #if ui_action is not None:
+        #    return
         quit_btn.draw(screen)
 
         juego_de_dados.update(pygame.mouse.get_pos(), mouse_up)

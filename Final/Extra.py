@@ -6,7 +6,7 @@ from enum import Enum
 import os
 import random
 
-
+print("AJUA 2")
 num_to_guess = random.randint(1,25)
 intentos = 3
 state=''
@@ -30,6 +30,7 @@ pygame.mixer.music.play(-1)
 class gameState():
     def __init__(self):
         self.running = True
+        self.exitState = True
 
 running = gameState()
 
@@ -38,9 +39,9 @@ def end_main(running):
     running.running = False
 
 #Define el nombre de la ventana y el logo
-pygame.display.set_caption("Juego Extra")
-icon = pygame.image.load(path + "\matematicas.png")
-pygame.display.set_icon(icon)
+#pygame.display.set_caption("Juego Extra")
+#icon = pygame.image.load(path + "\matematicas.png")
+#pygame.display.set_icon(icon)
 
 #COLOR_INACTIVE = pygame.Color('lightskyblue3')
 #COLOR_ACTIVE = pygame.Color('dodgerblue2')
@@ -314,12 +315,18 @@ def extra_main():
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 mouse_up = True
             if event.type == pygame.QUIT:
-                end()
                 end_main(running)
+                end()
+                
             input_box.handle_event(event)
 
         screen.fill(BG)
-        
+
+        ui_action = regresar_main_menu.update(pygame.mouse.get_pos(), mouse_up)
+        if ui_action is not None:
+            return
+        regresar_main_menu.draw(screen)
+
         input_box.update()
         input_box.draw(screen)
 
@@ -342,14 +349,5 @@ def extra_main():
         retry.update(pygame.mouse.get_pos(), mouse_up)
         retry.draw(screen)
 
-        regresar_main_menu.update(pygame.mouse.get_pos(), mouse_up)
-        regresar_main_menu.draw(screen)
-
         pygame.display.flip()
         clock.tick(30)
-
-"""
-if __name__ == '__main__':
-    extra_main()
-    pygame.quit()
-"""
