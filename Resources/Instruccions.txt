@@ -1,0 +1,5 @@
+Instrucciones:
+Sumar dos numeros aleatorios
+En el nivel facil se te proporcionaran dos numeros aleatorios del 1 al 100
+En el nivel Medio se te proporcionaran dos numeros aleatorios del 1 al 500
+En el nivel facil se te proporcionaran dos numeros aleatorios del 1 al 1000
