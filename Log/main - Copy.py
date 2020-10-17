@@ -285,18 +285,7 @@ def roll_p2():
 
 
 # We don't want our roll value output before the first roll occurs.
-roll_occur = False
-roll_occur_p2 = False
 
-menu = True
-RONDA=0
-P1_POINTS=0
-P1_info=""
-P1_2Dados=False
-P2_2Dados=False
-
-
-P2_POINTS=0
 
 def getPairs_and_Index(array):
     xd=array.copy()
@@ -311,8 +300,9 @@ def getPairs_and_Index(array):
             potentialPair.append(array[i])
         elif array[i]  in indexes.keys() and array[i] in potentialPair:
             return False
-    if len(pairs) == 1:
+    if len(pairs):
         print(xd, pairs)
+        print("ARRAYS:", pairs[0])
         return pairs[0]
     return False
 
@@ -396,94 +386,170 @@ def addPoints2(array):
         P2_POINTS+=12
         print(P2_POINTS)
 
+
+
+menu = True
+RONDA=0
+P1_POINTS=0
+P1_info=""
+P1_2Dados=False
+P2_2Dados=False
+P2_POINTS=0
+
+
+
 # main loop
-while already_rolled == False:
+def main():
+    global CONT
+    global FIRST_DICE
+    global SECOND_DICE
+    global TRD_DICE
+    global F4RT_DICE
+    global F5FT_DICE
+    global P2_FIRST_DICE
+    global P2_SECOND_DICE
+    global P2_TRD_DICE
+    global P2_F4RT_DICE
+    global P2_F5FT_DICE
+    global already_rolled
+    global menu
+    global RONDA
+    global P1_POINTS
+    global P1_info
+    global P1_2Dados
+    global P2_2Dados
+    global P2_POINTS
+    roll_occur = False
+    roll_occur_p2 = False
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            already_rolled = True
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
+    Turn = True
 
-                RONDA+=1
+    dta = []
+    dta2 = []
 
-                #cuando dos Dados son iguales 
-                if isinstance(P1_2Dados, list):
-                    re_roll(dta, P1_2Dados)
-                    addPoints1(dta)
-                    roll_occur = True
-                    roll_occur_p2 = False
-                    P1_2Dados=False
-                    
-                elif P1_2Dados == False:
-                    FIRST_DICE = roll_a_dice()
-                    SECOND_DICE = roll_a_dice()
-                    TRD_DICE = roll_a_dice()
-                    F4RT_DICE = roll_a_dice()
-                    F5FT_DICE = roll_a_dice()
-                    dta=[FIRST_DICE,SECOND_DICE,TRD_DICE,F4RT_DICE,F5FT_DICE]
-                    addPoints1(dta)
-                    P1_2Dados = getPairs_and_Index(dta)
+    while already_rolled == False:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                already_rolled = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+
+                    if Turn == True:
+                        RONDA += 1
+
+                        #cuando dos Dados son iguales 
+                        if isinstance(P1_2Dados, list): # Segundo tiro
+                            re_roll(dta, P1_2Dados)
+                            one=dta.count(1)
+                            two=dta.count(2)
+                            three=dta.count(3)
+                            four=dta.count(4)
+                            five=dta.count(5)
+                            six = dta.count(6)
+                            roll_occur = True
+                            roll_occur_p2 = False
+                            P1_2Dados=False
+                            Turn = False
+                            if not (one >= 3 or two >= 3 or three >= 3 or four >= 3 or five >= 3 or six >= 3):
+                                continue
+                            addPoints1(dta)
+                            
+                            
+                        elif P1_2Dados == False: # Primer tiro
+                            FIRST_DICE = roll_a_dice()
+                            SECOND_DICE = roll_a_dice()
+                            TRD_DICE = roll_a_dice()
+                            F4RT_DICE = roll_a_dice()
+                            F5FT_DICE = roll_a_dice()
+                            dta=[FIRST_DICE,SECOND_DICE,TRD_DICE,F4RT_DICE,F5FT_DICE]
+                            addPoints1(dta)
+                            P1_2Dados = getPairs_and_Index(dta)
+                            one=dta.count(1)
+                            two=dta.count(2)
+                            three=dta.count(3)
+                            four=dta.count(4)
+                            five=dta.count(5)
+                            six = dta.count(6)
+                            roll_occur = True
+                            roll_occur_p2 = False
+                            if len(dta) == len(set(dta)) or (one >= 3 or two >= 3 or three >= 3 or four >= 3 or five >= 3 or six >= 3):
+                                Turn = False
+                                continue
+                    else:
+
+                        if isinstance(P2_2Dados, list): #Segundo tiro
+                            re_roll2(dta2, P2_2Dados)
+                            one=dta2.count(1)
+                            two=dta2.count(2)
+                            three=dta2.count(3)
+                            four=dta2.count(4)
+                            five=dta2.count(5)
+                            six = dta2.count(6)
+                            roll_occur_p2 = True
+                            roll_occur = False
+                            P2_2Dados = False
+                            Turn = True
+                            if not (one >= 3 or two >= 3 or three >= 3 or four >= 3 or five >= 3 or six >= 3):
+                                    continue
+                            addPoints2(dta2)
+
+                        elif P2_2Dados == False: #Primer tiro
+                            P2_FIRST_DICE = roll_a_dice2()
+                            P2_SECOND_DICE = roll_a_dice2()
+                            P2_TRD_DICE = roll_a_dice2()
+                            P2_F4RT_DICE = roll_a_dice2()
+                            P2_F5FT_DICE = roll_a_dice2()
+                            dta2=[P2_FIRST_DICE,P2_SECOND_DICE,P2_TRD_DICE,P2_F4RT_DICE,P2_F5FT_DICE]
+                            addPoints2(dta2)
+                            P2_2Dados = getPairs_and_Index(dta2)
+                            one=dta2.count(1)
+                            two=dta2.count(2)
+                            three=dta2.count(3)
+                            four=dta2.count(4)
+                            five=dta2.count(5)
+                            six = dta2.count(6)
+                            roll_occur_p2 = True
+                            roll_occur = False
+                            if len(dta2) == len(set(dta2)) or (one >= 3 or two >= 3 or three >= 3 or four >= 3 or five >= 3 or six >= 3):
+                                Turn = True
+                                continue
+                        
+
+        gameDisplay.fill(black)
+        display_dice(FIRST_DICE, SECOND_DICE, TRD_DICE, F4RT_DICE, F5FT_DICE)
+        p2display_dice(P2_FIRST_DICE, P2_SECOND_DICE,
+                    P2_TRD_DICE, P2_F4RT_DICE, P2_F5FT_DICE)
+        # If the roll is requested, our_roll will execute.
+        while CONT==0:
+            P2_FIRST_DICE = roll_a_dice2()
+            P2_SECOND_DICE = roll_a_dice2()
+            P2_TRD_DICE = roll_a_dice2()
+            P2_F4RT_DICE = roll_a_dice2()
+            P2_F5FT_DICE = roll_a_dice2()
+            FIRST_DICE = roll_a_dice()
+            SECOND_DICE = roll_a_dice()
+            TRD_DICE = roll_a_dice()
+            F4RT_DICE = roll_a_dice()
+            F5FT_DICE = roll_a_dice()
+            CONT+=1
+
+        draw_pointsP1(gameDisplay,('>> SCORE P1: '+str(P1_POINTS)),25,550,100)
+
+        if (roll_occur):
+            roll()
+        if (roll_occur_p2):
+            roll_p2()
+
+        pygame.display.update()
+        clock.tick(30)
+
+    # Once the loop exits, the program will quit.
+    # Loop will exit when the 'Exit' button on the window is clicked.This bit of code just ensures you can actually
+    # click that and exit.
+    pygame.quit()
+    quit()
 
 
-                    roll_occur = True
-                    roll_occur_p2 = False
-
-            if event.key == pygame.K_a:
-
-                if isinstance(P2_2Dados, list):
-                    re_roll2(dta2, P2_2Dados)
-                    addPoints2(dta2)
-                    roll_occur_p2 = True
-                    roll_occur = False
-                    P2_2Dados = False
-
-                elif P2_2Dados == False:
-                    P2_FIRST_DICE = roll_a_dice2()
-                    P2_SECOND_DICE = roll_a_dice2()
-                    P2_TRD_DICE = roll_a_dice2()
-                    P2_F4RT_DICE = roll_a_dice2()
-                    P2_F5FT_DICE = roll_a_dice2()
-                    dta2=[P2_FIRST_DICE,P2_SECOND_DICE,P2_TRD_DICE,P2_F4RT_DICE,P2_F5FT_DICE]
-                    addPoints2(dta2)
-                    P2_2Dados = getPairs_and_Index(dta2)
-
-                    roll_occur_p2 = True
-                    roll_occur = False
-
-
-    gameDisplay.fill(black)
-    display_dice(FIRST_DICE, SECOND_DICE, TRD_DICE, F4RT_DICE, F5FT_DICE)
-    p2display_dice(P2_FIRST_DICE, P2_SECOND_DICE,
-                P2_TRD_DICE, P2_F4RT_DICE, P2_F5FT_DICE)
-    # If the roll is requested, our_roll will execute.
-    while CONT==0:
-        P2_FIRST_DICE = roll_a_dice2()
-        P2_SECOND_DICE = roll_a_dice2()
-        P2_TRD_DICE = roll_a_dice2()
-        P2_F4RT_DICE = roll_a_dice2()
-        P2_F5FT_DICE = roll_a_dice2()
-        FIRST_DICE = roll_a_dice()
-        SECOND_DICE = roll_a_dice()
-        TRD_DICE = roll_a_dice()
-        F4RT_DICE = roll_a_dice()
-        F5FT_DICE = roll_a_dice()
-        CONT+=1
-
-    draw_pointsP1(gameDisplay,('>> SCORE P1: '+str(P1_POINTS)),25,550,100)
-
-    if (roll_occur):
-        roll()
-    if (roll_occur_p2):
-        roll_p2()
-
-    pygame.display.update()
-    clock.tick(30)
-
-
-# Once the loop exits, the program will quit.
-# Loop will exit when the 'Exit' button on the window is clicked.This bit of code just ensures you can actually
-# click that and exit.
-pygame.quit()
-quit()
+main()
